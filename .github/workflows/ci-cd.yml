@@ -85,7 +85,7 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    needs: build
+    needs: [tests_linux, tests_windows, tests_macos]
 
     steps:
       - uses: actions/checkout@v4
