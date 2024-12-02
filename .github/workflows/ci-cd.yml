@@ -15,6 +15,7 @@ on:
     branches: [ "main" ]
 
 jobs:
+  # Сборка мавеном без тестов
   build:
 
     runs-on: ubuntu-latest
@@ -30,6 +31,7 @@ jobs:
     - name: Build with Maven
       run: mvn -B package -DskipTests=true --file pom.xml
 
+  # Тест на linux
   tests_linux:
 
     runs-on: ubuntu-latest
@@ -47,6 +49,7 @@ jobs:
       - name: Build with Maven
         run: mvn test --file pom.xml
 
+  # Тест на windows
   tests_windows:
 
     runs-on: windows-latest
@@ -64,6 +67,7 @@ jobs:
       - name: Build with Maven
         run: mvn test --file pom.xml
 
+  # Тест на macos
   tests_macos:
 
     runs-on: macos-latest
@@ -81,6 +85,7 @@ jobs:
       - name: Build with Maven
         run: mvn test --file pom.xml
 
+  # Деплой на сервер
   deploy:
 
     runs-on: ubuntu-latest
@@ -99,7 +104,7 @@ jobs:
         run:  |
           curl -X POST \
           -H "Content-Type: application/json" \
-          https://api.render.com/deploy/srv-ct71bd8gph6c73c5flpg?key=${{ secrets.RENDER_SECRET }}
+          https://api.render.com/deploy/${{ secrets.RENDER_ID }}?key=${{ secrets.RENDER_SECRET }}
 
 
 
