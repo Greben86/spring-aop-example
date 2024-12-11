@@ -35,7 +35,7 @@ class PersonalControllerTest {
     public void testGetByIdAllowed(String userRole) throws Exception {
         long id = new Date().getTime();
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/person/"+id+"/get")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/person/" + id + "/get")
                         .header(USER_ROLE_HEADER, userRole))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -50,7 +50,7 @@ class PersonalControllerTest {
     public void testGetByIdDenied(String userRole) throws Exception {
         long id = new Date().getTime();
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/person/"+id+"/get")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/person/" + id + "/get")
                         .header(USER_ROLE_HEADER, userRole))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isUnauthorized())
@@ -65,7 +65,7 @@ class PersonalControllerTest {
         byte[] bookByte = mockMvc.perform(MockMvcRequestBuilders.post("/api/person/save")
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .header(USER_ROLE_HEADER, userRole)
-                        .content("{\"id\":\""+id0+"\",\"name\":\"Сидор\",\"surname\":\"Сидоров\"}")
+                        .content("{\"id\":\"" + id0 + "\",\"name\":\"Сидор\",\"surname\":\"Сидоров\"}")
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -85,7 +85,7 @@ class PersonalControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/person/save")
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .header(USER_ROLE_HEADER, userRole)
-                        .content("{\"id\":\""+id0+"\",\"name\":\"Сидор\",\"surname\":\"Сидоров\"}")
+                        .content("{\"id\":\"" + id0 + "\",\"name\":\"Сидор\",\"surname\":\"Сидоров\"}")
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isUnauthorized())
@@ -97,10 +97,10 @@ class PersonalControllerTest {
     @ValueSource(strings = {"ADMIN", "USER ADMIN"})
     public void testDeleteAllowed(String userRole) throws Exception {
         long id0 = new Date().getTime();
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/person/"+id0+"/delete")
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/person/" + id0 + "/delete")
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .header(USER_ROLE_HEADER, userRole)
-                        .content("{\"id\":\""+id0+"\",\"name\":\"Сидор\",\"surname\":\"Сидоров\"}")
+                        .content("{\"id\":\"" + id0 + "\",\"name\":\"Сидор\",\"surname\":\"Сидоров\"}")
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -112,10 +112,10 @@ class PersonalControllerTest {
     @ValueSource(strings = {"USER", "", "NONAME", "ALIEN"})
     public void testDeleteDenied(String userRole) throws Exception {
         long id0 = new Date().getTime();
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/person/"+id0+"/delete")
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/person/" + id0 + "/delete")
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .header(USER_ROLE_HEADER, userRole)
-                        .content("{\"id\":\""+id0+"\",\"name\":\"Сидор\",\"surname\":\"Сидоров\"}")
+                        .content("{\"id\":\"" + id0 + "\",\"name\":\"Сидор\",\"surname\":\"Сидоров\"}")
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isUnauthorized())
@@ -125,7 +125,7 @@ class PersonalControllerTest {
     private Long getIdFromAnswer(byte[] answer) throws IOException {
         String str = new String(answer, StandardCharsets.UTF_8);
         ObjectMapper objectMapper = new ObjectMapper();
-        try(JsonParser parser = objectMapper.createParser(str)) {
+        try (JsonParser parser = objectMapper.createParser(str)) {
             Person person = parser.readValueAs(Person.class);
             return person.getId();
         }
